@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/nick_nak/parkMail/algorithms/hw4-3/Array.cpp
+cstdlib
+-
+cstring
+-
+
+/Users/nick_nak/parkMail/algorithms/hw4-3/Heap.cpp
+Array.cpp
+/Users/nick_nak/parkMail/algorithms/hw4-3/Array.cpp
+
+/Users/nick_nak/parkMail/algorithms/hw4-3/main.cpp
+iostream
+-
+sstream
+-
+Heap.cpp
+/Users/nick_nak/parkMail/algorithms/hw4-3/Heap.cpp
+
