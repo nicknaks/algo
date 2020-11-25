@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <cassert>
+#include <cmath>
 
 struct Point {
   int x = 0;
@@ -43,5 +44,5 @@ double calculateSquare(Point* array, int pointQuantity) {
 
   square += (array[0].x - array[pointQuantity - 1].x) * (array[0].y + array[pointQuantity - 1].y);
 
-  return std::abs(square) / 2.0;
+  return abs(square) / 2.0;
 }

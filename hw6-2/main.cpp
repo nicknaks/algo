@@ -7,31 +7,30 @@
 template<typename T>
 bool isLessDefault( const T& l, const T& r )
 {
-  return l > r;
+  return l < r;
 }
 
 template<typename T>
-void Median(T* array, int left, int right) {
-  int middle = (left + right) / 2;
+void Median(T* array, int left, int right, bool (*isLess)(const T &, const T &)) {
+    int middle = (left + right) / 2;
 
-  if (array[left] > array[middle]) {
-    if (array[left] < array[right]) {
-      std::swap(array[right], array[left]);
-      std::swap(array[middle], array[left]);
-    } else if (array[right] < array[middle]) {
-        std::swap(array[middle], array[right]);
-        std::swap(array[middle], array[left]);
+    if (isLess(array[left], array[middle])) {
+        if (isLess(array[middle], array[left])) {
+            std::swap(array[right], array[left]);
+            std::swap(array[middle], array[left]);
+        } else if (isLess(array[middle], array[left])) {
+            std::swap(array[middle], array[right]);
+            std::swap(array[middle], array[left]);
+        } else {
+            std::swap(array[middle], array[left]);
+        }
     } else {
-      std::swap(array[middle], array[left]);
+        if (isLess(array[middle], array[left])) {
+            std::swap (array[middle], array[right]);
+        } else if (isLess(array[middle], array[left])) {
+            std::swap (array[right], array[left]);
+        }
     }
-  } else {
-    if (array[right] > array[middle]) {
-      std::swap (array[middle], array[right]);
-    } else if (array[right] < array[left]) {
-        std::swap (array[right], array[left]);
-    }
-  }
-
 }
 
 template<typename T>
@@ -40,14 +39,13 @@ int Partition(T* array, int left, int right, bool (*isLess)(const T &, const T &
     return 0;
   }
 
-  Median(array, left, right);
+  Median(array, left, right, isLess);
 
   const int &pivot = array[right];
   // j <= i
   int i = right - 1;
   int j = i;
 
-  // collect < pivot
   while (j >= left) {
     if (array[j] == pivot || isLess(array[j], pivot)) {
       std::swap(array[i--], array[j]);
