@@ -1,13 +1,12 @@
 //Реализуйте стратегию выбора опорного элемента “медиана трёх”.
-// Функцию Partition реализуйте методом прохода двумя итераторами от конца массива к началу.
+//Функцию Partition реализуйте методом прохода двумя итераторами от конца массива к началу.
 
 #include <iostream>
 #include <algorithm>
 
 template<typename T>
-bool isLessDefault( const T& l, const T& r )
-{
-  return l < r;
+bool isLessDefault( const T& l, const T& r ) {
+  return l > r;
 }
 
 template<typename T>
