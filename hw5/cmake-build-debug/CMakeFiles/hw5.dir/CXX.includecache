@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/nick_nak/parkMail/algo/hw5/heap.h
+vector
+-
+iostream
+-
+stack
+-
+
+/Users/nick_nak/parkMail/algo/hw5/main.cpp
+iostream
+-
+vector
+-
+sstream
+-
+heap.h
+/Users/nick_nak/parkMail/algo/hw5/heap.h
+
