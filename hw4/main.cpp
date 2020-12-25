@@ -34,9 +34,10 @@ class AVLTree {
   int Add(const T &key) {
     int position = 0;
     add(root, key, position);
-    return position;
+    return height(root) - position - 1;
   }
   void Delete(int position) {
+    position = height(root) - position - 1;
     root = remove(root, position);
   }
 
@@ -50,7 +51,7 @@ class AVLTree {
   };
 
   static bool isLessDefault(const T &l, const T &r) {
-    return l < r;
+    return l > r;
   }
 
   bool (*cmp)(const T &, const T &);
@@ -141,34 +142,37 @@ class AVLTree {
     return balance(node);
   }
 
-  Node* remove(Node *node, int &position) {
+  Node *remove(Node *node, int &position) {
     if (node == nullptr) {
       return nullptr;
     }
 
     if (!cmp(position, height(node->left)) && position != height(node->left)) {
-      node->left = remove(node->left,position);
-    } else if (cmp(position,height(node->left) && position != height(node->left))) {
+      node->left = remove(node->left, position);
+    } else if (cmp(position, height(node->left) && position != height(node->left))) {
       position -= (height(node->left) + 1);
-      node->right = remove(node->right,position);
+      node->right = remove(node->right, position);
     } else {
-      Node* left = node->left;
-      Node* right = node->right;
-      delete node;
+      Node *minParent = node;
+      Node *min = node->right;
 
-      if (right == nullptr) {
-        return left;
+      while (min->left != nullptr) {
+        minParent = min;
+        min = min->left;
       }
 
-      Node* min = findMin(right);
-      min->right = removeMin(right);
-      min->left = left;
-      return balance(min);
-    }
+      node->key = min->key;
+      if (minParent->left == min) {
+        minParent->left = min->right;
+      } else {
+        minParent->right = min->right;
+      }
 
+      delete min;
+      return balance(node);
+    }
     return balance(node);
   }
-
 };
 
 enum Command {
