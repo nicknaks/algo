@@ -125,33 +125,16 @@ class AVLTree {
     node = balance(node);
   }
 
-  Node *findMin(Node *node) {
-    if (node->left == nullptr) {
-      return node;
-    }
-
-    return findMin(node->left);
-  }
-
-  Node *removeMin(Node *node) {
-    if (node->left == nullptr) {
-      return node->right;
-    }
-
-    node->left = removeMin(node->left);
-    return balance(node);
-  }
-
-  Node *remove(Node *node, int &position) {
+  Node* remove(Node *node, int &position) {
     if (node == nullptr) {
       return nullptr;
     }
 
     if (!cmp(position, height(node->left)) && position != height(node->left)) {
-      node->left = remove(node->left, position);
-    } else if (cmp(position, height(node->left) && position != height(node->left))) {
+      node->left = remove(node->left,position);
+    } else if (cmp(position,height(node->left))) {
       position -= (height(node->left) + 1);
-      node->right = remove(node->right, position);
+      node->right = remove(node->right,position);
     } else {
       Node *minParent = node;
       Node *min = node->right;
