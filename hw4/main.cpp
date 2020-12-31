@@ -125,34 +125,36 @@ class AVLTree {
     node = balance(node);
   }
 
-  Node* remove(Node *node, int &position) {
+  Node *findRemoveMin(Node *node, Node **findNode) {
+    if (node->left == nullptr) {
+      *findNode = node;
+      return node->right;
+    }
+    node->left = findRemoveMin(node->left, findNode);
+    return balance(node);
+  }
+
+  Node *remove(Node *node, int &position) {
     if (node == nullptr) {
       return nullptr;
     }
 
     if (!cmp(position, height(node->left)) && position != height(node->left)) {
-      node->left = remove(node->left,position);
-    } else if (cmp(position,height(node->left))) {
+      node->left = remove(node->left, position);
+    } else if (cmp(position, height(node->left))) {
       position -= (height(node->left) + 1);
-      node->right = remove(node->right,position);
+      node->right = remove(node->right, position);
     } else {
-      Node *minParent = node;
-      Node *min = node->right;
+      Node *left = node->left;
+      Node *right = node->right;
+      delete node;
+      if (!right) return left;
 
-      while (min->left != nullptr) {
-        minParent = min;
-        min = min->left;
-      }
-
-      node->key = min->key;
-      if (minParent->left == min) {
-        minParent->left = min->right;
-      } else {
-        minParent->right = min->right;
-      }
-
-      delete min;
-      return balance(node);
+      Node* tmpNode;
+      Node* tmpSideNode = findRemoveMin(right, &tmpNode);
+      tmpNode->right = tmpSideNode;
+      tmpNode->left = left;
+      return balance(tmpNode);
     }
     return balance(node);
   }
